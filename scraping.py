@@ -19,10 +19,10 @@ def scrape_all():
     data = {
       "news_title": news_title,
       "news_paragraph": news_paragraph,
-      "featured_image": featured_image(browser),
-      "facts": mars_facts(),
+      "featured_master": featured_masters(browser),
+      "facts": kungFu_facts(),
       "last_modified": dt.datetime.now(),
-      "hemispheres": mars_hemispheres(browser)
+      "video_thumbnails": YC_media(browser)
     }
 
      # Stop webdriver and return data
@@ -58,20 +58,20 @@ def YC_bio(browser):
 
 ### Featured Images
 
-def featured_image(browser):
+def featured_masters(browser):
         
     # Visit URL
     try:
-        PREFIX = "https://web.archive.org/web/20181114023740"
-        url = f'{PREFIX}/https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
+        # Shaolin Lomita scrape different masters' hrefs
+        url = "https://shaolinlomita.com/masters/"
         browser.visit(url)
-        article = browser.find_by_tag('article').first['style']
-        article_background = article.split("_/")[1].replace('");',"")
-        return f'{PREFIX}_if/{article_background}'
+        master_background = browser.find_by_tag('a').first['href']
+        #master_background = master.split("_/")[1].replace('");',"")
+        return master_background
     except:
         return 'https://www.nasa.gov/sites/default/files/styles/full_width_feature/public/thumbnails/image/pia22486-main.jpg'
 
-def mars_facts():
+def kungFu_facts():
 
     try:
         # use "read_html" to scrape the facts table into a dataframe
