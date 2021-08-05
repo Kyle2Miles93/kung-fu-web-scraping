@@ -13,7 +13,7 @@ def scrape_all():
     browser = Browser('chrome', **executable_path, headless=True)
     
 
-    news_title, news_paragraph = mars_news(browser)
+    news_title, news_paragraph = YC_bio(browser)
 
     # Run all scraping functions and store results in dictionary
     data = {
@@ -29,11 +29,11 @@ def scrape_all():
     browser.quit()
     return data
 
-def mars_news(browser):
+def YC_bio(browser):
 
 
     # Visit the mars nasa news site
-    url = 'https://redplanetscience.com/'
+    url = 'http://tigercrane.com/master.html'
     browser.visit(url)
     # Optional delay for loading the page
     browser.is_element_present_by_css("div.list_text", wait_time=1)
@@ -47,13 +47,13 @@ def mars_news(browser):
         slide_elem.find('div', class_='content_title')
 
         # Use the parent element to find the first 'a' tag and save it as 'news_title'
-        news_title = slide_elem.find('div', class_='content_title').get_text()
+        sifu_headline = slide_elem.find('div', class_='content_title').get_text()
 
-        news_p = slide_elem.find('div', class_='article_teaser_body').get_text()
+        bio_p = slide_elem.find('div', class_='article_teaser_body').get_text()
     except AttributeError:
         return None, None
 
-    return news_title, news_p
+    return sifu_headline, bio_p
 
 
 ### Featured Images
@@ -86,7 +86,7 @@ def mars_facts():
     # Convert dataframe into HTML
     return df.to_html(classes="table table-striped")
     
-def mars_hemispheres(browser):
+def YC_media(browser):
 
         # 1. Use browser to visit the URL 
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
